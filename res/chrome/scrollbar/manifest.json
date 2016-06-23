@@ -1,0 +1,17 @@
+{
+	"manifest_version": 2,
+	"name": "Void Scrollbar",
+	"version": "0.1.0",
+	"offline_enabled": true,
+	"content_scripts": [{
+		"matches": ["<all_urls>"],
+		"css": ["scrollbar.css","dim.css"],
+		"js": ["content.js"]
+	}],
+	"permissions": [
+        "activeTab",
+        "tabs",
+        "http://*/*",
+        "https://*/*"
+    ]
+}

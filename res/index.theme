@@ -1,0 +1,10 @@
+[X-GNOME-Metatheme]
+Name=Void
+Type=X-GNOME-Metatheme
+Comment=Dark theme for dark entities
+Encoding=UTF-8
+GtkTheme=Void
+MetacityTheme=Void
+IconTheme=Adwaita
+CursorTheme=Adwaita
+CursorSize=24
