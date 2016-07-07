@@ -176,14 +176,6 @@ build_prompt() {
     prompt_end
 }
 
-#PROVIDER="/home/tong/dev/project/void/build/zsh/prompt"
-
-RPS1=$(/home/tong/dev/project/void/build/zsh/prompt -r)
-PROMPT=$(/home/tong/dev/project/void/build/zsh/prompt)
-#PROMPT="$PROVIDER"
-#RPS1=$($PROVIDER -r)
-
-#/home/tong/dev/project/void/build/zsh/prompt
 #PROMPT='%{%f%b%k%}$(build_prompt) '
-#PROMPT=$(neko /home/tong/dev/project/void/build/zsh/prompt.n)
-#PROMPT="$_CURRENT_TIME_ $_CURRENT_USER_"
+PROMPT=$(/home/tong/dev/project/void/build/zsh/prompt)
+#RPS1=$(/home/tong/dev/project/void/build/zsh/prompt -r)
