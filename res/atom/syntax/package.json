@@ -1,0 +1,11 @@
+{
+	"name": "void-syntax",
+	"theme": "syntax",
+	"version": "0.1.0",
+	"description": "Void syntax theme",
+	"repository": "https://github.com/tong/atom-void-syntax",
+	"license": "GPL",
+	"engines": {
+    	"atom": ">1.8.0"
+	}
+}
