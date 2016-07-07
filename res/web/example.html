@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>\/0!)</title>
+
+		<script>
+
+			function handleLoadComponents(e) {
+
+				var types = ["os","chrome","void"];
+
+				var content = document.getElementById( 'import-preview' ).import;
+				var components = content.querySelector( '.components' );
+				for( var i = 0; i < types.length; i++ ) {
+					var type = types[i];
+					var table = components.cloneNode( true );
+					table.id = 'components-'+type;
+					document.body.appendChild( table );
+				}
+			}
+
+			function handleLoadVoid(e) {
+
+				//var link = document.querySelector( 'link[rel="import"]' );
+				var link = document.getElementById( 'import-void' );
+				var content = link.import;
+				var template = content.getElementById( 'void' );
+				var clone = document.importNode( template.content, true );
+				document.body.appendChild( clone );
+			}
+
+		</script>
+
+		<link rel="import" id="import-void" href="void.html" onload="handleLoadVoid(event)">
+		<link rel="import" id="import-preview" href="components.html" onload="handleLoadComponents(event)">
+
+	</head>
+
+	<body></body>
+
+</html>

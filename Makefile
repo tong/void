@@ -87,11 +87,18 @@ build/wallpaper:
 	mkdir -p build/wallpaper
 	cp res/image/wallpaper/* $@
 
-build/web:
-	mkdir -p $@
-	lessc res/web/web.less $@/void.css
-	cp res/web/web.js $@/void.js
-	cp res/web/index.html $@
+build/web/void.css: res/web/*
+	lessc res/web/void.less $@
+
+build/web/void.js: res/web/*
+	$(HX) -js $@ -main void.web.Components
+
+build/web/void.html: res/web/*
+	cp res/web/void.html $@
+
+build/web: build/web/void.css build/web/void.js build/web/void.html
+	cp res/web/example.html $@/example.html
+	cp res/web/components.html $@/components.html
 
 build/zsh/prompt: src/void/zsh/*
 	$(HX) -cpp build/zsh/src -main void.zsh.Prompt
