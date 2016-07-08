@@ -6,12 +6,15 @@ PROJECT=void
 SRC=res/style/*
 HX=haxe -lib om.core -dce full -cp src
 
+NUM_BUILD_THREADS=4
+
 all: build
 
 build: \
 	build/atom \
 	build/chrome/scrollbar \
 	build/chrome/theme \
+	build/cursor \
 	build/dox \
 	build/font \
 	build/gtk-3.0 \
@@ -53,6 +56,12 @@ build/chrome/theme:
 	mkdir -p $@
 	cp -r res/chrome/theme/images $@
 	cp res/chrome/theme/manifest.json $@
+
+build/cursor:
+	mkdir -p $@
+	python tool/renderpngs.py res/cursor/cursors.svg --number-of-renderers $(NUM_BUILD_THREADS) --anicursorgen
+	mv pngs $@
+	cp res/cursor/*.theme $@
 
 build/dox: $(SRC) res/dox/*
 	mkdir -p $@
