@@ -1,0 +1,124 @@
+
+## Conky i3bar Configuration
+
+out_to_console yes
+out_to_x no
+
+update_interval 1.0
+total_run_times 0
+
+own_window yes
+own_window_transparent yes
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_class Conky
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+
+#own_window yes
+#own_window_class conky
+#own_window_type normal
+#own_window_transparent yes
+#own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+#own_window_argb_visual yes
+#own_window_argb_value 0
+
+use_xft yes
+#xftfont Anonymous Pro:size=8
+#xftfont Frucade Small:size=6
+
+background no
+#use_spacer left
+#max_text_width 0
+#short_units yes
+#if_up_strictness address
+#default_graph_size 8,100
+
+#default_color 13191C
+#default_shade_color 000000
+#default_outline_color 828282
+#color0 99B2B8
+#color1 657B83
+#color_error #FF5252
+
+override_utf8_locale no
+cpu_avg_samples 2
+
+TEXT
+[
+#    {
+#        "full_text": "${execi 10 $HOME/.config/i3/script/bar-cmus.sh}"
+#    },
+    {
+        "full_text": " ${downspeedf eth0}  ${upspeedf eth0}",
+        "markup": "pango",
+        "separator": false
+    },
+    {
+        "full_text": " $totaldown  $totalup",
+        "markup": "pango",
+        "separator": false
+    },
+    {
+        "full_text": "$addrs|${texeci 115200 curl -s getip.disktree.net}",
+        "markup": "pango"
+    },
+#    {
+#        "full_text": "${running_processes}/${processes} ${running_threads}/${threads}"
+#    },
+    {
+        "full_text": "CPU $cpu%",
+        "color": ${if_match ${cpu cpu}>95}"\#FF5252"${else}${if_match ${cpu cpu}>90}"\#FF9800"${else}"\#455A64"${endif}${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu1}>90}"CPU1 ${cpu cpu1}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu2}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu2}>90}"CPU2 ${cpu cpu2}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu2}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu3}>90}"CPU3 ${cpu cpu3}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu3}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu4}>90}"CPU4 ${cpu cpu4}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu4}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": "MEM ${memperc}%",
+        "color": ${if_match ${memperc}>70}"\#FF5252"${else}"\#455A64"${endif}
+    },
+#    {
+#        "full_text": "${processes} <span background='\#000000'>ABC</span>",
+#        "markup": "pango"
+#    },
+    # { "full_text": "${user_terms}" },
+    # { "full_text": "${user_names}" },
+#    {
+#        "full_text": ${if_match $acpitemp>30}"$acpitemp°"$else"$acpitemp°"$endif,
+#        "color": ${if_match $acpitemp>50}"\#FF5252"$else"\#646464"$endif
+#    },
+#    {
+#        "full_text": "",
+#        "color": "\#222D33",
+#        "background": "\#13191C"
+#    },
+#    {
+#        "full_text": "${fs_free}",
+#    },
+#    {
+#        "full_text": "${time %a} ${time %e %B} ${time %H:%M}"
+#    },
+    {
+        "full_text": " ${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6 | sed -e 's/^\[//' -e 's/\]$//' }"
+    }
+],
