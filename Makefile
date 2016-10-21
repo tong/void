@@ -1,12 +1,21 @@
-
+##
 ## Void
+##
+#### DEBUG=1 : Enable debug options
+##
 
 PROJECT=void
+DEBUG=0
+NUM_BUILD_THREADS=2
 #INSTALL_DIR="${HOME}/.themes"
-SRC=res/style/*
-HX=haxe -lib om.core -dce full -cp src
+SRC_STYLE=res/style/*
+HX=haxe -lib om.core -cp src -dce full
 
-NUM_BUILD_THREADS=4
+ifeq ($(DEBUG),1)
+	HX+=-debug
+else
+	HX+=--no-traces
+endif
 
 all: build
 
@@ -22,6 +31,10 @@ build: \
 	build/web \
 	build/zsh \
 	build/index.theme
+
+################################################################################
+
+##### ATOM
 
 build/atom/syntax:
 	mkdir -p build/atom
@@ -43,19 +56,22 @@ build/atom: \
 	build/atom/syntax \
 	build/atom/ui
 
-build/chrome/scrollbar/dim.css: $(SRC) res/chrome/scrollbar/*
-	lessc res/chrome/scrollbar/dim.less $@
-build/chrome/scrollbar/scrollbar.css: $(SRC) res/chrome/scrollbar/*
-	lessc res/chrome/scrollbar/scrollbar.less $@
+##### CHROME
 
-build/chrome/scrollbar: build/chrome/scrollbar/dim.css build/chrome/scrollbar/scrollbar.css
-	cp res/chrome/scrollbar/manifest.json $@
-	cp res/chrome/scrollbar/content.js $@
+build/chrome/mod/dim.css: $(SRC_STYLE) res/chrome/mod/*
+	lessc res/chrome/mod/dim.less $@
+build/chrome/mod/scrollbar.css: $(SRC_STYLE) res/chrome/mod/*
+	lessc res/chrome/mod/scrollbar.less $@
+build/chrome/mod: build/chrome/mod/dim.css build/chrome/mod/scrollbar.css
+	cp res/chrome/mod/manifest.json $@
+	cp res/chrome/mod/content.js $@
 
 build/chrome/theme:
 	mkdir -p $@
 	cp -r res/chrome/theme/images $@
 	cp res/chrome/theme/manifest.json $@
+
+##### CURSOR
 
 build/cursor:
 	mkdir -p $@
@@ -63,38 +79,52 @@ build/cursor:
 	mv pngs $@
 	cp res/cursor/*.theme $@
 
-build/dox: $(SRC) res/dox/*
+##### DOX
+
+build/dox: $(SRC_STYLE) res/dox/*
 	mkdir -p $@
 	${HX} -js $@/assets/app.js -main void.dox.App
 	cp -r res/dox/resources $@
 	cp -r res/dox/templates $@
 	cp res/dox/config.json $@
 
+##### FONTS
+
 build/font:
 	mkdir -p $@
 	cp res/font/* $@
 
-build/gtk-2.0/gtk.css: $(SRC) res/gtk-2/*
+##### GTK
+
+build/gtk-2.0/gtk.css: $(SRC_STYLE) res/gtk-2/*
 	lessc res/gtk-2/gtk.less $@
 
 build/gtk-2.0: build/gtk-2.0/gtk.css
 
-build/gtk-3.0/gtk-dark.css: $(SRC) res/gtk-3/*
+build/gtk-3.0/gtk-dark.css: $(SRC_STYLE) res/gtk-3/*
 	lessc res/gtk-3/gtk-dark.less $@
 
-build/gtk-3.0/gtk.css: $(SRC) res/gtk-3/*
+build/gtk-3.0/gtk.css: $(SRC_STYLE) res/gtk-3/*
 	lessc res/gtk-3/gtk.less $@
 
 build/gtk-3.0: \
 	build/gtk-3.0/gtk.css \
 	build/gtk-3.0/gtk-dark.css
 
+#build/i3: res/i3/*
+#	cp -r res/i3 build/i3
+
 build/index.theme:
 	cp res/index.theme $@
+
+
+##### WALLPAPERS
 
 build/wallpaper:
 	mkdir -p build/wallpaper
 	cp res/image/wallpaper/* $@
+
+##### WEB
 
 build/web/void.css: res/web/*
 	lessc res/web/void.less $@
@@ -109,11 +139,16 @@ build/web: build/web/void.css build/web/void.js build/web/void.html
 	cp res/web/example.html $@/example.html
 	cp res/web/components.html $@/components.html
 
-build/zsh/prompt: src/void/zsh/*
+build/zsh/prompt: src/void/zsh/*.hx
 	$(HX) -cpp build/zsh/src -main void.zsh.Prompt
 	mv build/zsh/src/Prompt $@
 
+
+##### ZSH
+
 build/zsh: build/zsh/prompt
+
+################################################################################
 
 install:
 	cp -r build ${HOME}/.themes/Void
