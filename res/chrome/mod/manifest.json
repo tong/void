@@ -17,6 +17,8 @@
         "http://*/*",
         "https://*/*",
 		"notifications",
-		"contextMenus"
+		"contextMenus",
+		"bookmarks",
+		"history"
     ]
 }
