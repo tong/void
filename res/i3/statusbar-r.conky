@@ -4,7 +4,7 @@
 out_to_console yes
 out_to_x no
 
-update_interval 10.0
+update_interval 1.0
 total_run_times 0
 own_window no
 
@@ -18,7 +18,7 @@ use_xft yes
 xftfont Anonymous Pro:size=8
 
 background no
-use_spacer left
+#use_spacer left
 max_text_width 0
 
 short_units yes
@@ -26,12 +26,15 @@ if_up_strictness address
 
 #default_graph_size 8,100
 
-default_color 839496
+default_color 455A64
 #default_shade_color 000000
 #default_outline_color 828282
-color0 99B2B8
-color1 657B83
-color_error #DC322F
+#color0 99B2B8
+#color1 657B83
+#color_error DC322F
+#color_error FF5252
+#color_warning FF9800
+#color_text 2A373E
 
 override_utf8_locale no
 cpu_avg_samples 2
@@ -39,7 +42,43 @@ cpu_avg_samples 2
 TEXT
 [
     {
-        "full_text": "${time %a} ${time %e %B} ${time %H:%M}",
-        "color": "\#455A64"
+        "full_text": " $totaldown  $totalup"
+    },
+    {
+        "full_text": " ${downspeedf eth0}  ${upspeedf eth0}"
+    },
+    {
+        "full_text": "MEM ${memperc}%",
+        "color": ${if_match ${memperc}>70}"\#FF9800"${else}"\#455A64"${endif}
+    },
+    {
+        "full_text": "CPU $cpu%",
+        "color": ${if_match ${cpu cpu}>95}"\#FF5252"${else}${if_match ${cpu cpu}>90}"\#FF9800"${else}"\#455A64"${endif}${endif}
+    },
+    {
+        "full_text": ${if_match ${cpu cpu1}>90}"CPU1 ${cpu cpu1}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu2}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu2}>90}"CPU2 ${cpu cpu2}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu2}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu3}>90}"CPU3 ${cpu cpu3}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu3}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": ${if_match ${cpu cpu4}>90}"CPU4 ${cpu cpu4}%"${else}""${endif},
+        "color": ${if_match ${cpu cpu4}>95}"\#FF9800"${else}"\#455A64"${endif},
+        "separator": false
+    },
+    {
+        "full_text": " ${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6 | sed -e 's/^\[//' -e 's/\]$//' }"
+    },
+    {
+        "full_text": "${time %a} ${time %e %B} ${time %H:%M}"
     }
 ],
