@@ -1,7 +1,7 @@
 
 @import "../common";
 
-@thick: 8px;
+@scrollbar-thick: 8px;
 
 @scrollbar-color: rgba(62, 81, 90, 0.8); //#3E515A; //#2A373E;
 @scrollbar-color-highlight: rgba(62, 81, 90, 0.5); // #3E515A; //#2A373E;
@@ -12,11 +12,11 @@
 	border: none;
 
 	&:vertical {
-		width: @thick;
+		width: @scrollbar-thick;
 	}
 
 	&:horizontal {
-		height: @thick;
+		height: @scrollbar-thick;
 	}
 }
 
@@ -26,14 +26,16 @@
 
 ::-webkit-scrollbar-thumb {
 
-	border-radius: @thick;
+	border-radius: @scrollbar-thick;
 
 	&:vertical {
-		border-right: @thick solid @scrollbar-color;
+		border-right: @scrollbar-thick solid @scrollbar-color;
+		min-height: 30px;
 	}
 
 	&:horizontal {
-		border-bottom: @thick solid @scrollbar-color;
+		border-bottom: @scrollbar-thick solid @scrollbar-color;
+		min-width: 30px;
 	}
 
 	&:hover {

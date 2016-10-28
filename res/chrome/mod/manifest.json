@@ -5,8 +5,8 @@
 	"offline_enabled": true,
 	"content_scripts": [{
 		"matches": ["<all_urls>"],
-		"css": ["scrollbar.css","dim.css"],
-		"js": ["content.js"]
+		"css": ["scrollbar.css"],
+		"js": []
 	}],
 	"chrome_url_overrides" : {
         "newtab": "newtab.html"
