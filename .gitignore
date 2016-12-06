@@ -1,4 +1,6 @@
 _*
 *.pak
 build/
+data/
 pngs/
+style/*.css
